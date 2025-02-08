@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cylfr87ssv03i"]
+
+[ext_resource type="Script" path="res://LibraryEntity/book_line.gd" id="1_cso4e"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vb7g7"]
+size = Vector3(0.05, 0.2, 0.15)
+
+[node name="BookLine" type="Node3D"]
+script = ExtResource("1_cso4e")
+
+[node name="PreviewMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, -0.075)
+mesh = SubResource("BoxMesh_vb7g7")

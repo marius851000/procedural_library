@@ -1,7 +1,11 @@
-use crate::{book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase};
+use std::thread::{self, JoinHandle};
+
+use crate::{
+    book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase,
+};
 
 pub struct VecBasedBookLibraryDatabase {
-    pub books: Vec<BookInfo>
+    pub books: Vec<BookInfo>,
 }
 
 impl VecBasedBookLibraryDatabase {
@@ -15,11 +19,17 @@ impl BookLibraryDatabase for VecBasedBookLibraryDatabase {
         self.books.len() as u64
     }
 
-    fn get_book_range<F: FnOnce(Result<Vec<BookInfo>, GetBookRangeError>)>(&self, start_inclusive: u64, count: u64, callback: F) {
-        if start_inclusive + count > self.books.len() as u64 {
-            callback(Err(GetBookRangeError::OutOfRange(start_inclusive, count)));
+    fn get_book_range(
+        &self,
+        start_inclusive: u64,
+        count: u64,
+        callback: Box<dyn FnOnce(Result<Vec<BookInfo>, GetBookRangeError>) + Send>,
+    ) -> JoinHandle<()> {
+        let result = if start_inclusive + count > self.books.len() as u64 {
+            Err(GetBookRangeError::OutOfRange(start_inclusive, count))
         } else {
-            callback(Ok(self.books[start_inclusive as usize..(start_inclusive + count) as usize].to_vec()));
-        }
+            Ok(self.books[start_inclusive as usize..(start_inclusive + count) as usize].to_vec())
+        };
+        thread::spawn(move || callback(result))
     }
 }

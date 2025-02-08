@@ -1,8 +1,10 @@
-use std::io::Read;
+use std::{io::Read, thread::JoinHandle};
 
 use serde::Deserialize;
 
-use crate::{book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase};
+use crate::{
+    book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase,
+};
 
 use super::{AnnaMetadata, LoadAnnaMetadataError};
 
@@ -40,13 +42,13 @@ impl BookLibraryDatabase for AnnaBloomsburyMetadata {
         self.anna_metadata.get_book_count()
     }
 
-    fn get_book_range<F: FnOnce(Result<Vec<BookInfo>, GetBookRangeError>)>(
+    fn get_book_range(
         &self,
         start_inclusive: u64,
         count: u64,
-        callback: F,
-    ) {
+        callback: Box<dyn FnOnce(Result<Vec<BookInfo>, GetBookRangeError>) + Send>,
+    ) -> JoinHandle<()> {
         self.anna_metadata
-            .get_book_range(start_inclusive, count, callback);
+            .get_book_range(start_inclusive, count, callback)
     }
 }

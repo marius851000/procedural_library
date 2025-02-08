@@ -1,7 +1,12 @@
-use std::io::{BufRead, BufReader, Read};
+use std::{
+    io::{BufRead, BufReader, Read},
+    thread::JoinHandle,
+};
 use thiserror::Error;
 
-use crate::{book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase};
+use crate::{
+    book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase,
+};
 
 use super::VecBasedBookLibraryDatabase;
 
@@ -45,12 +50,12 @@ impl BookLibraryDatabase for AnnaMetadata {
         self.books.get_book_count()
     }
 
-    fn get_book_range<F: FnOnce(Result<Vec<BookInfo>, GetBookRangeError>)>(
+    fn get_book_range(
         &self,
         start_inclusive: u64,
         count: u64,
-        callback: F,
-    ) {
-        self.books.get_book_range(start_inclusive, count, callback);
+        callback: Box<dyn FnOnce(Result<Vec<BookInfo>, GetBookRangeError>) + Send>,
+    ) -> JoinHandle<()> {
+        self.books.get_book_range(start_inclusive, count, callback)
     }
 }

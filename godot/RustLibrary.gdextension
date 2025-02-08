@@ -1,0 +1,14 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.1
+reloadable = true
+
+[libraries]
+linux.debug.x86_64 =     "res://../rust_godot/target/debug/libprocedural_library_rust.so"
+linux.release.x86_64 =   "res://../rust_godot/target/release/libprocedural_library_rust.so"
+windows.debug.x86_64 =   "res://../rust_godot/target/debug/procedural_library_rust.dll"
+windows.release.x86_64 = "res://../rust_godot/target/release/procedural_library_rust.dll"
+macos.debug =            "res://../rust_godot/target/debug/libprocedural_library_rust.dylib"
+macos.release =          "res://../rust_godot/target/release/libprocedural_library_rust.dylib"
+macos.debug.arm64 =      "res://../rust_godot/target/debug/libprocedural_library_rust.dylib"
+macos.release.arm64 =    "res://../rust_godot/target/release/libprocedural_library_rust.dylib"

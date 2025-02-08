@@ -1,0 +1,11 @@
+[package]
+name = "procedural_library_rust_godot"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]  # Compile this crate to a dynamic C library.
+
+[dependencies]
+godot = "0.2.3"
+procedural_library_rust_native = { path = "../rust_native" }

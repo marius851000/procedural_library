@@ -1,12 +1,10 @@
 @tool
 extends LibraryLOD
 
-@export var start_position: int
-@export var length: int = 500:
-	set(value):
-		length = value
-		if Engine.is_editor_hint():
-			reload_preview()
+func _set_book_length_mm(value: int):
+	super(value)
+	if Engine.is_editor_hint():
+		reload_preview()
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -15,7 +13,7 @@ func _ready() -> void:
 
 func _load_static():
 	var book_scene = preload("res://LibraryEntity/Book.tscn")
-	var books = $"/root/GlobalLibrary".get_book_range_from_distance(start_position, length, false)
+	var books = $"/root/GlobalLibrary".get_book_range_from_distance(book_start_distance_mm, book_length_mm, false)
 	
 	var previous_book = null
 	var free_space_total_length = 0
@@ -50,5 +48,5 @@ func does_contain_book_by_default(book_id: int) -> bool:
 	#return book_id >= start_index and book_id < start_index + line_size
 	
 func reload_preview():
-	$PreviewMesh.set("scale", Vector3(length * 0.001, 1, 1))
-	$PreviewMesh.set("position", Vector3(length*0.001/2, 0.2/2, -0.15/2))
+	$PreviewMesh.set("scale", Vector3(book_length_mm * 0.001, 1, 1))
+	$PreviewMesh.set("position", Vector3(book_length_mm * 0.001/2, 0.2/2, -0.15/2))

@@ -2,6 +2,14 @@ extends Node3D
 class_name LibraryLOD
 
 var parent_lod: LibraryLOD;
+# -1 is the default value, equivalent to null
+@export var book_start_distance_mm: int = -1;
+@export var book_length_mm: int = -1:
+	set = _set_book_length_mm
+
+func _set_book_length_mm(value: int):
+	book_length_mm = value
+
 @export var unload_distance: float = 2.0;
 @export var load_distance: float = 1.0;
 #TODO: can’t I make them overrideable constant? It should optimise better.
@@ -13,9 +21,11 @@ var is_high_lod = false;
 
 var childs_lod: Array[LibraryLOD] = [];
 
+func _enter_tree() -> void:
+	find_and_register_with_parent()
+	
 func _ready():
 	process_lod()
-	find_and_register_with_parent()
 
 func find_and_register_with_parent():
 	if Engine.is_editor_hint():

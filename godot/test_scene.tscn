@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cvs1ljooa4d2a"]
+[gd_scene load_steps=8 format=3 uid="uid://cvs1ljooa4d2a"]
 
 [ext_resource type="Script" path="res://LibraryEsoteric/library_lod_root.gd" id="1_r0bas"]
 [ext_resource type="Script" path="res://LibraryEsoteric/user_camera.gd" id="2_635lp"]
 [ext_resource type="PackedScene" uid="uid://dlcwbu08hplnf" path="res://LibraryEntity/Shelf/SimpleTestShelf/SimpleTestShelf.tscn" id="3_0nqx2"]
+[ext_resource type="Script" path="res://LibraryEsoteric/book_locator.gd" id="4_a4sjv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gi78"]
 albedo_color = Color(0.331127, 0.563196, 0.44672, 1)
@@ -10,6 +11,9 @@ albedo_color = Color(0.331127, 0.563196, 0.44672, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_nckvv"]
 material = SubResource("StandardMaterial3D_2gi78")
 size = Vector2(10, 10)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o6p1r"]
+size = Vector2(5, 5)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_r0bas")
@@ -45,3 +49,14 @@ skeleton = NodePath("../Ground")
 transform = Transform3D(-0.0300463, 0.995006, -0.0951852, -0.997883, -0.0353549, -0.0545843, -0.057677, 0.0933437, 0.993962, 0.457966, -0.00937819, -1.98363)
 mesh = SubResource("QuadMesh_nckvv")
 skeleton = NodePath("../Ground2")
+
+[node name="Locator" type="Sprite3D" parent="." node_paths=PackedStringArray("root")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58832, 0.196795, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+fixed_size = true
+texture = SubResource("PlaceholderTexture2D_o6p1r")
+script = ExtResource("4_a4sjv")
+root = NodePath("..")
+position_book_to_find = 4000

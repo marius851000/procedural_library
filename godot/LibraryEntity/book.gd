@@ -39,9 +39,12 @@ func _load_static():
 	$"Label".text = book_title
 	$"Label".position = Vector3($SimpleBookMesh.scale.x/2, $SimpleBookMesh.scale.y/2, 0.001)
 
-func does_contain_book_by_default(searched_book_id: int) -> bool:
-	#TODO: re-implement
-	return false
+func does_contain_book_by_default(searched_book_distance: int) -> bool:
+	if book_info == null:
+		return false
+	else:
+		return book_info.get_distance() <= searched_book_distance and book_info.get_distance() + book_info.get_width() > searched_book_distance
+			
 
 func _process(delta: float) -> void:
 	pass # Do not call the LibraryLOD LOD-related code

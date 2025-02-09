@@ -41,12 +41,7 @@ func _load_static():
 
 func _unload_static():
 	$PreviewMesh.set("visible", true)
-	
-func does_contain_book_by_default(book_id: int) -> bool:
-	#TODO: re-implement
-	return false
-	#return book_id >= start_index and book_id < start_index + line_size
-	
+
 func reload_preview():
 	$PreviewMesh.set("scale", Vector3(book_length_mm * 0.001, 1, 1))
 	$PreviewMesh.set("position", Vector3(book_length_mm * 0.001/2, 0.2/2, -0.15/2))

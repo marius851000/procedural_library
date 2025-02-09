@@ -63,9 +63,15 @@ func register_child_lod(child_lod: LibraryLOD):
 	self.childs_lod.push_back(child_lod)
 	child_lod.set("parent_lod", self)
 
-func does_contain_book_by_default(_book_position: int) -> bool:
-	return false
+func does_contain_book_by_default(book_start_position: int) -> bool:
+	return book_start_distance_mm <= book_start_position and book_start_distance_mm + book_length_mm > book_start_position
 
+func get_book_position(book_start_position: int) -> Vector3:
+	for child in childs_lod:
+		if child.does_contain_book_by_default(book_start_position):
+			return child.get_book_position(book_start_position)
+	return self.global_position
+	
 func _unload_static():
 	pass
 

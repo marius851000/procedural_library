@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cvs1ljooa4d2a"]
 
 [ext_resource type="Script" path="res://LibraryEsoteric/library_lod_root.gd" id="1_r0bas"]
-[ext_resource type="Script" path="res://LibraryEntity/user_camera.gd" id="2_635lp"]
+[ext_resource type="Script" path="res://LibraryEsoteric/user_camera.gd" id="2_635lp"]
 [ext_resource type="PackedScene" uid="uid://dlcwbu08hplnf" path="res://LibraryEntity/Shelf/SimpleTestShelf/SimpleTestShelf.tscn" id="3_0nqx2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gi78"]
@@ -29,15 +29,12 @@ mesh = SubResource("QuadMesh_nckvv")
 
 [node name="SimpleTestShelf2" parent="." instance=ExtResource("3_0nqx2")]
 transform = Transform3D(0.877523, 0, -0.479534, 0, 1, 0, 0.479534, 0, 0.877523, 1.5088, 0, 0.0505528)
-start_index = 80
 
 [node name="SimpleTestShelf3" parent="." instance=ExtResource("3_0nqx2")]
 transform = Transform3D(0.394134, 0, -0.919053, 0, 1, 0, 0.919053, 0, 0.394134, 2.76409, 0, 0.828918)
-start_index = 160
 
 [node name="SimpleTestShelf4" parent="." instance=ExtResource("3_0nqx2")]
 transform = Transform3D(-0.0181854, 0, -0.999835, 0, 1, 0, 0.999835, 0, -0.0181854, 3.24696, 0, 2.26732)
-start_index = 240
 
 [node name="Ground2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0578934, -0.0355099, -0.997691, -0.00205709, -0.999369, 0.0354503, -0.998321, 5.06439e-09, -0.0579299, 4.55896, 0, 0)

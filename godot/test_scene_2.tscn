@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://djwjyef6bpefh"]
+
+[ext_resource type="Script" path="res://LibraryEsoteric/library_lod_root.gd" id="1_rcg73"]
+[ext_resource type="Script" path="res://LibraryEsoteric/user_camera.gd" id="2_vo6td"]
+[ext_resource type="PackedScene" uid="uid://cylfr87ssv03i" path="res://LibraryEntity/BookLine.tscn" id="3_0rrtm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0e0j"]
+albedo_color = Color(0.805427, 0.500237, 0.449508, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6ewau"]
+material = SubResource("StandardMaterial3D_x0e0j")
+size = Vector2(1, 1)
+
+[node name="TestScene2" type="Node3D"]
+script = ExtResource("1_rcg73")
+unload_distance = 10.0
+load_distance = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.850609, 0.525798, 0, -0.525798, 0.850609, 0, 0.744522, 0.966744)
+fov = 94.1766
+script = ExtResource("2_vo6td")
+
+[node name="BookLine" parent="." instance=ExtResource("3_0rrtm")]
+length = 1000
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.65594, -0.754813, 0, 0.754813, 0.65594, 0.50208, -0.102229, 0)
+mesh = SubResource("PlaneMesh_6ewau")

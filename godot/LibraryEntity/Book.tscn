@@ -8,10 +8,12 @@
 script = ExtResource("1_amjcc")
 
 [node name="Label" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.00271171)
-pixel_size = 0.0003
-text = "Lorem ipsum something"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.015, 0.001)
+pixel_size = 0.00046875
+double_sided = false
+texture_filter = 0
+text = "Lorem Ipsum Something"
 
 [node name="SimpleBookMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.04, 0, 0, 0, 0.15, 0, 0, -0.0809645)
+transform = Transform3D(0.2, 0, 0, 0, 0.03, 0, 0, 0, 0.15, 0.1, 0.015, -0.075)
 mesh = SubResource("BoxMesh_chb3r")

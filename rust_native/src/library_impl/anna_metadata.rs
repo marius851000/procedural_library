@@ -4,9 +4,7 @@ use std::{
 };
 use thiserror::Error;
 
-use crate::{
-    book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase,
-};
+use crate::{book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase};
 
 use super::VecBasedBookLibraryDatabase;
 
@@ -50,12 +48,18 @@ impl BookLibraryDatabase for AnnaMetadata {
         self.books.get_book_count()
     }
 
-    fn get_book_range(
+    fn get_book_range_from_distance(
         &self,
         start_inclusive: u64,
         count: u64,
-        callback: Box<dyn FnOnce(Result<Vec<BookInfo>, GetBookRangeError>) + Send>,
+        always_return_one_book: bool,
+        callback: Box<dyn FnOnce(Result<Vec<(BookInfo, u64)>, GetBookRangeError>) + Send>,
     ) -> JoinHandle<()> {
-        self.books.get_book_range(start_inclusive, count, callback)
+        self.books.get_book_range_from_distance(
+            start_inclusive,
+            count,
+            always_return_one_book,
+            callback,
+        )
     }
 }

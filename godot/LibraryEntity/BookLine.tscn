@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://LibraryEntity/book_line.gd" id="1_cso4e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vb7g7"]
-size = Vector3(0.05, 0.2, 0.15)
+size = Vector3(1, 0.2, 0.15)
 
 [node name="BookLine" type="Node3D"]
 script = ExtResource("1_cso4e")
@@ -11,5 +11,5 @@ unload_distance = 3.0
 load_distance = 2.0
 
 [node name="PreviewMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, -0.075)
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.1, -0.075)
 mesh = SubResource("BoxMesh_vb7g7")

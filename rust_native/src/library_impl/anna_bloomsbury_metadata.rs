@@ -3,9 +3,7 @@ use std::{io::Read, thread::JoinHandle};
 use rand::Rng;
 use serde::Deserialize;
 
-use crate::{
-    book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase,
-};
+use crate::{book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase};
 
 use super::{AnnaMetadata, LoadAnnaMetadataError};
 
@@ -32,7 +30,7 @@ impl AnnaBloomsburyMetadata {
 
                 Ok(BookInfo {
                     title: parsed.metadata.title,
-                    width: rand::rng().random_range(1.0..=10.0),
+                    width: rand::rng().random_range(10..=100),
                 })
             })?,
         })
@@ -44,13 +42,18 @@ impl BookLibraryDatabase for AnnaBloomsburyMetadata {
         self.anna_metadata.get_book_count()
     }
 
-    fn get_book_range(
+    fn get_book_range_from_distance(
         &self,
         start_inclusive: u64,
         count: u64,
-        callback: Box<dyn FnOnce(Result<Vec<BookInfo>, GetBookRangeError>) + Send>,
+        always_return_one_book: bool,
+        callback: Box<dyn FnOnce(Result<Vec<(BookInfo, u64)>, GetBookRangeError>) + Send>,
     ) -> JoinHandle<()> {
-        self.anna_metadata
-            .get_book_range(start_inclusive, count, callback)
+        self.anna_metadata.get_book_range_from_distance(
+            start_inclusive,
+            count,
+            always_return_one_book,
+            callback,
+        )
     }
 }

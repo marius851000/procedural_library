@@ -1,8 +1,7 @@
 use std::fs::File;
 
 use procedural_library_rust_native::{
-    library_impl::AnnaBloomsburyMetadata, BookInfo, BookLibraryDatabase,
-    GetBookRangeError,
+    library_impl::AnnaBloomsburyMetadata, BookInfo, BookLibraryDatabase, GetBookRangeError,
 };
 
 pub fn main() {
@@ -11,14 +10,19 @@ pub fn main() {
 
     println!("book_count: {}", anna_metadata.get_book_count());
 
-    let callback = |r: Result<Vec<BookInfo>, GetBookRangeError>| {
+    let callback = |r: Result<Vec<(BookInfo, u64)>, GetBookRangeError>| {
         let r = r.unwrap();
 
         println!("{:?}", r);
     };
 
     anna_metadata
-        .get_book_range(10, 20, Box::new(callback))
+        .get_book_range_from_distance(0, 1000, false, Box::new(callback))
+        .join()
+        .unwrap();
+
+    anna_metadata
+        .get_book_range_from_distance(1, 100, false, Box::new(callback))
         .join()
         .unwrap();
 }

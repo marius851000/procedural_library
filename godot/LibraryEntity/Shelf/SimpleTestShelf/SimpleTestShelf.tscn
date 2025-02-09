@@ -10,20 +10,19 @@ unload_distance = 20.0
 load_distance = 15.0
 
 [node name="BookLine" parent="." instance=ExtResource("2_3uyyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.21525, -0.039673)
-line_size = 20
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.111849, -0.039673)
+length = 1000
 
 [node name="ShelfModel" parent="." instance=ExtResource("3_iisfd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01203, 0.062489, 0)
 
 [node name="BookLine2" parent="." instance=ExtResource("2_3uyyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.101969, 0.557627, -0.079346)
-line_size = 20
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.101969, 0.45214, -0.079346)
+length = 100
 
 [node name="BookLine3" parent="." instance=ExtResource("2_3uyyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.893117, -0.113221)
-line_size = 20
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.801224, -0.113221)
+length = 600
 
 [node name="BookLine4" parent="." instance=ExtResource("2_3uyyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.132044, 1.28009, -0.0957764)
-line_size = 20
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.132044, 1.18336, -0.0957764)

@@ -1,7 +1,6 @@
 extends Node3D
 class_name LibraryLOD
 
-@export var unique_library_child_id: String;
 var parent_lod: LibraryLOD;
 @export var unload_distance: float = 2.0;
 @export var load_distance: float = 1.0;
@@ -19,6 +18,8 @@ func _ready():
 	find_and_register_with_parent()
 
 func find_and_register_with_parent():
+	if Engine.is_editor_hint():
+		return
 	var considering_parent = self
 	while true:
 		considering_parent = considering_parent.get_parent()
@@ -41,7 +42,7 @@ func register_child_lod(child_lod: LibraryLOD):
 	self.childs_lod.push_back(child_lod)
 	child_lod.set("parent_lod", self)
 
-func does_contain_book_by_default(_book_id: int) -> bool:
+func does_contain_book_by_default(_book_position: int) -> bool:
 	return false
 
 func _unload_static():

@@ -1,5 +1,6 @@
 use std::{io::Read, thread::JoinHandle};
 
+use rand::Rng;
 use serde::Deserialize;
 
 use crate::{
@@ -31,6 +32,7 @@ impl AnnaBloomsburyMetadata {
 
                 Ok(BookInfo {
                     title: parsed.metadata.title,
+                    width: rand::rng().random_range(1.0..=10.0),
                 })
             })?,
         })

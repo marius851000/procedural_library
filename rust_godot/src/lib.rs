@@ -48,4 +48,21 @@ impl GodotProceduralLibraryData {
 
         return result.lock().unwrap().clone().unwrap();
     }
+
+    //TODO: merge with get_book_title
+    #[func]
+    pub fn get_book_width(&self, index: u64) -> f32 {
+
+        //TODO: make it work with background loading. Also horrible naming.
+        let result = Arc::new(Mutex::new(None));
+        let arc_clone = result.clone();
+        self.library.get_book_range(index, 1, Box::new(move |r: Result<Vec<BookInfo>, GetBookRangeError>| {
+            //TODO: get rid of panic. For now, it should poison the lock.
+            let mut value = arc_clone.lock().unwrap();
+
+            *value = Some(r.unwrap()[0].width.clone());
+        })).join().unwrap();
+
+        return result.lock().unwrap().clone().unwrap();
+    }
 }

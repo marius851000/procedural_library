@@ -24,15 +24,15 @@ pub struct AnnaMetadata {
 }
 
 impl AnnaMetadata {
-    pub fn new<R: Read, P: Fn(&str) -> Result<BookInfo, anyhow::Error>>(
+    pub fn new<R: Read, P: Fn(&str, u64) -> Result<BookInfo, anyhow::Error>>(
         mut reader: R,
         parser: P,
     ) -> Result<Self, LoadAnnaMetadataError> {
         let mut books = Vec::new();
-        for line in BufReader::new(&mut reader).lines() {
+        for (book_id, line) in BufReader::new(&mut reader).lines().enumerate() {
             let line = line?;
 
-            let parsed = parser(&line).map_err(LoadAnnaMetadataError::BookInfoParseError)?;
+            let parsed = parser(&line, book_id as u64).map_err(LoadAnnaMetadataError::BookInfoParseError)?;
 
             books.push(parsed);
         }

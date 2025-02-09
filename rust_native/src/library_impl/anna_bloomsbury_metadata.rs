@@ -1,6 +1,7 @@
 use std::{io::Read, thread::JoinHandle};
 
-use rand::Rng;
+use rand::{Rng, SeedableRng};
+use rand_chacha::ChaCha20Rng;
 use serde::Deserialize;
 
 use crate::{book_library_database::GetBookRangeError, BookInfo, BookLibraryDatabase};
@@ -25,12 +26,12 @@ pub struct AnnaBloomsburyMetadata {
 impl AnnaBloomsburyMetadata {
     pub fn new<R: Read>(reader: R) -> Result<Self, LoadAnnaMetadataError> {
         Ok(Self {
-            anna_metadata: AnnaMetadata::new(reader, |line| {
+            anna_metadata: AnnaMetadata::new(reader, |line, book_id| {
                 let parsed = serde_json::from_str::<AnnaBloomsburyMetaFormat>(line)?;
-
+                
                 Ok(BookInfo {
                     title: parsed.metadata.title,
-                    width: rand::rng().random_range(10..=100),
+                    width: ChaCha20Rng::seed_from_u64(book_id).random_range(10..=100),
                 })
             })?,
         })

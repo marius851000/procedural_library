@@ -21,7 +21,6 @@ func _load_static():
 		node.set("unique_library_child_id", "book_default_" + str(i))
 		node.rotate(Vector3.FORWARD, PI/2)
 		node.translate(Vector3.UP * (0.05 * i + 0.02))
-		register_child_lod(node)
 		add_child(node)
 	$PreviewMesh.set("visible", false)
 

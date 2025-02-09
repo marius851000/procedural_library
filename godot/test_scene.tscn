@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvs1ljooa4d2a"]
+[gd_scene load_steps=6 format=3 uid="uid://cvs1ljooa4d2a"]
 
+[ext_resource type="Script" path="res://LibraryEsoteric/library_lod_root.gd" id="1_r0bas"]
 [ext_resource type="Script" path="res://LibraryEntity/user_camera.gd" id="2_635lp"]
 [ext_resource type="PackedScene" uid="uid://dlcwbu08hplnf" path="res://LibraryEntity/Shelf/SimpleTestShelf/SimpleTestShelf.tscn" id="3_0nqx2"]
 
@@ -11,6 +12,7 @@ material = SubResource("StandardMaterial3D_2gi78")
 size = Vector2(10, 10)
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_r0bas")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.620258, 0, -0.784398, 0, 1, 0, 0.784398, 0, 0.620258, -0.291963, 1, 3.04583)
@@ -21,14 +23,6 @@ transform = Transform3D(0.949118, -0.0584432, -0.30945, 0.31492, 0.176138, 0.932
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-mesh = SubResource("QuadMesh_nckvv")
-
-[node name="Ground" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(0.0578934, -0.0355099, -0.997691, 0.998321, 3.86194e-08, 0.0579299, -0.00205705, -0.999369, 0.0354503, 4.55896, 0, 0)
-mesh = SubResource("QuadMesh_nckvv")
-
-[node name="Ground" type="MeshInstance3D" parent="Ground/Ground"]
-transform = Transform3D(0.0578934, -0.0355099, -0.997691, 0.998321, 3.77528e-08, 0.0579299, -0.00205705, -0.999369, 0.0354503, 1.7429, 0.154998, 4.2061)
 mesh = SubResource("QuadMesh_nckvv")
 
 [node name="SimpleTestShelf" parent="." instance=ExtResource("3_0nqx2")]
@@ -44,3 +38,13 @@ start_index = 160
 [node name="SimpleTestShelf4" parent="." instance=ExtResource("3_0nqx2")]
 transform = Transform3D(-0.0181854, 0, -0.999835, 0, 1, 0, 0.999835, 0, -0.0181854, 3.24696, 0, 2.26732)
 start_index = 240
+
+[node name="Ground2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0578934, -0.0355099, -0.997691, -0.00205709, -0.999369, 0.0354503, -0.998321, 5.06439e-09, -0.0579299, 4.55896, 0, 0)
+mesh = SubResource("QuadMesh_nckvv")
+skeleton = NodePath("../Ground")
+
+[node name="Ground3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0300463, 0.995006, -0.0951852, -0.997883, -0.0353549, -0.0545843, -0.057677, 0.0933437, 0.993962, 0.457966, -0.00937819, -1.98363)
+mesh = SubResource("QuadMesh_nckvv")
+skeleton = NodePath("../Ground2")

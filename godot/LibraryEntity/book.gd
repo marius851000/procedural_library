@@ -5,9 +5,8 @@ var book_title: String
 
 func _init() -> void:
 	self.use_lod = false;
-	
-func _ready() -> void:
-	super._ready()
+
+func _load_static():
 	book_title = $"/root/GlobalLibrary".get_book_title(book_id)
 	$"Label".set("text", book_title)
 

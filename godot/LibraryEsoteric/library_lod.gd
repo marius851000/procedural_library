@@ -18,12 +18,19 @@ var use_lod = true;
 # if false, will put registered child at low lod and disable LOD update for them. It won’t deregister them.
 var remove_child_on_low = true;
 var is_high_lod = false;
+var auto_allocate_if_needed = true;
 
 var childs_lod: Array[LibraryLOD] = [];
 
 func _enter_tree() -> void:
 	find_and_register_with_parent()
-	
+	if self.book_start_distance_mm == -1 and auto_allocate_if_needed:
+		if self.parent_lod == null:
+			self.book_start_distance_mm = 0
+		else:
+			assert(book_length_mm != -1)
+			self.book_start_distance_mm = self.parent_lod.allocate_book_range(book_length_mm)
+
 func _ready():
 	process_lod()
 
@@ -44,6 +51,10 @@ func find_and_register_with_parent():
 	
 	self.parent_lod = considering_parent
 	self.parent_lod.register_child_lod(self)
+
+func allocate_book_range(length: int) -> int:
+	assert(false, "allocate book range called on an invalid LibraryLOD")
+	return -1
 
 func when_no_parent_is_found():
 	assert(false, 'no LibraryLOD parent found')

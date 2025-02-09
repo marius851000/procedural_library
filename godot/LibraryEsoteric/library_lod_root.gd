@@ -1,5 +1,7 @@
 extends LibraryLOD
 
+var next_allocation_start: int = 0;
+
 func _init():
 	self.use_lod = false
 	self.remove_child_on_low = false
@@ -7,6 +9,11 @@ func _init():
 func when_no_parent_is_found(): # expected
 	pass
 
+func allocate_book_range(length: int) -> int:
+	var to_return = next_allocation_start
+	next_allocation_start += length
+	return to_return
+	
 func _process(dt: float):
 	#TODO: actually call that 10 time per second (approx) with increasing number
 	self.process_lod_maybe(0)

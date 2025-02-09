@@ -6,6 +6,7 @@ var book_info: GodotBookInfo
 
 func _init() -> void:
 	self.use_lod = false;
+	self.auto_allocate_if_needed = false
 	
 func _ready() -> void:
 	if Engine.is_editor_hint():

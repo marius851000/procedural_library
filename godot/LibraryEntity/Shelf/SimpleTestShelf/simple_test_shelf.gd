@@ -2,6 +2,7 @@ extends LibraryLOD
 
 func _init():
 	remove_child_on_low = false
+	book_length_mm = 800 + 500 + 200 + 1000
 
 func _load_static():
 	$BookLine.book_start_distance_mm = book_start_distance_mm

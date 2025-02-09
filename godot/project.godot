@@ -18,3 +18,4 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalLibrary="*res://LibraryAbstract/global_library.gd"
+CameraManager="*res://LibraryAbstract/camera_manager.gd"

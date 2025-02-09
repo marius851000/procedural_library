@@ -1,18 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvs1ljooa4d2a"]
+[gd_scene load_steps=3 format=3 uid="uid://cvs1ljooa4d2a"]
 
-[ext_resource type="PackedScene" uid="uid://cugt2vjl25djf" path="res://LibraryEntity/Book.tscn" id="1_hf5ti"]
-[ext_resource type="Script" path="res://extension_simple_camera_3d/free_look_camera.gd" id="2_tvo82"]
+[ext_resource type="Script" path="res://LibraryEntity/user_camera.gd" id="2_635lp"]
 [ext_resource type="Script" path="res://quick_test.gd" id="4_euj0p"]
 
 [node name="Node3D" type="Node3D"]
 
-[node name="Book" parent="." instance=ExtResource("1_hf5ti")]
-book_id = 3
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.72086)
-script = ExtResource("2_tvo82")
+script = ExtResource("2_635lp")
 
 [node name="QuickTest" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.941981, 0)
 script = ExtResource("4_euj0p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.988255, 0.0283592, 0.150159, -0.152813, 0.183401, 0.971088, 0, -0.982629, 0.185581, 0, 2.12129, 1.57095)

@@ -1,5 +1,6 @@
 #Copyright © 2022 Marc Nahr: https://github.com/MarcPhi/godot-free-look-camera
 extends Camera3D
+class_name SimpleFreeLookCamera3D
 
 @export_range(0, 10, 0.01) var sensitivity : float = 3
 @export_range(0, 1000, 0.1) var default_velocity : float = 5

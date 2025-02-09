@@ -2,3 +2,4 @@
 *.jsonl.seekable.zst
 rust_native/target/
 rust_godot/target/
+*.blend1

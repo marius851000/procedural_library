@@ -1,9 +1,6 @@
 extends Node3D
 class_name LibraryLOD
 
-signal post_load
-signal pre_unload
-
 @export var unique_library_child_id: String;
 @export var parent_lod: LibraryLOD;
 @export var unload_distance: float = 2.0;
@@ -46,7 +43,7 @@ func load():
 	is_high_lod = true
 
 func process_lod():
-	if use_lod:
+	if use_lod and not Engine.is_editor_hint():
 		var calculated_distance = $"/root/CameraManager".get_distance_to_nearest_camera(self);
 		if is_high_lod:
 			if calculated_distance > unload_distance:
@@ -56,4 +53,5 @@ func process_lod():
 				self.load()
 
 func _process(dt: float):
-	process_lod()
+	if not Engine.is_editor_hint():
+		process_lod()

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlcwbu08hplnf"]
+
+[ext_resource type="Script" path="res://LibraryEntity/Shelf/SimpleTestShelf/simple_test_shelf.gd" id="1_bwwsx"]
+[ext_resource type="PackedScene" uid="uid://cylfr87ssv03i" path="res://LibraryEntity/BookLine.tscn" id="2_3uyyi"]
+[ext_resource type="PackedScene" uid="uid://citjyyc771xky" path="res://LibraryEntity/Shelf/SimpleTestShelf/simple_test_shelf.blend" id="3_iisfd"]
+
+[node name="SimpleTestShelf" type="Node3D"]
+script = ExtResource("1_bwwsx")
+
+[node name="BookLine" parent="." instance=ExtResource("2_3uyyi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.21525, -0.039673)
+line_size = 20
+
+[node name="ShelfModel" parent="." instance=ExtResource("3_iisfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01203, 0.062489, 0)
+
+[node name="BookLine2" parent="." instance=ExtResource("2_3uyyi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.101969, 0.557627, -0.079346)
+line_size = 20
+
+[node name="BookLine3" parent="." instance=ExtResource("2_3uyyi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.893117, -0.113221)
+line_size = 20
+
+[node name="BookLine4" parent="." instance=ExtResource("2_3uyyi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.132044, 1.28009, -0.0957764)
+line_size = 20

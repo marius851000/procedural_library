@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cugt2vjl25djf" path="res://LibraryEntity/Book.tscn" id="1_hf5ti"]
 [ext_resource type="Script" path="res://extension_simple_camera_3d/free_look_camera.gd" id="2_tvo82"]
-[ext_resource type="PackedScene" uid="uid://cylfr87ssv03i" path="res://LibraryEntity/BookLine.tscn" id="3_xntjp"]
+[ext_resource type="Script" path="res://quick_test.gd" id="4_euj0p"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -13,5 +13,6 @@ book_id = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.72086)
 script = ExtResource("2_tvo82")
 
-[node name="TestShelf" parent="." instance=ExtResource("3_xntjp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.591589, 0, 0)
+[node name="QuickTest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.941981, 0)
+script = ExtResource("4_euj0p")

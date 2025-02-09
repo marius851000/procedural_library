@@ -71,18 +71,22 @@ func load():
 	is_high_lod = true
 
 func process_lod():
-	if use_lod and not Engine.is_editor_hint():
-		var calculated_distance = $"/root/CameraManager".get_distance_to_nearest_camera(self);
-		if is_high_lod:
-			if calculated_distance > unload_distance:
-				unload()
+	if not Engine.is_editor_hint():
+		if use_lod:
+			var calculated_distance = $"/root/CameraManager".get_distance_to_nearest_camera(self);
+			if is_high_lod:
+				if calculated_distance > unload_distance:
+					unload()
+			else:
+				if calculated_distance < load_distance:
+					self.load()
 		else:
-			if calculated_distance < load_distance:
-				self.load()
+			self.load()
 
 # Will call this function 10 time per second (by default).
 # marker_number will loop from 0 to 0xFFFF at each call.
 func process_lod_maybe(marker_number: int):
 	process_lod()
-	for child in childs_lod:
-		child.process_lod_maybe(marker_number)
+	if is_high_lod:
+		for child in childs_lod:
+			child.process_lod_maybe(marker_number)

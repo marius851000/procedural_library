@@ -6,6 +6,8 @@
 
 [node name="SimpleTestShelf" type="Node3D"]
 script = ExtResource("1_bwwsx")
+unload_distance = 20.0
+load_distance = 15.0
 
 [node name="BookLine" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.21525, -0.039673)

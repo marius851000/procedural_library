@@ -34,7 +34,7 @@ impl BookLibraryDatabase for VecBasedBookLibraryDatabase {
     fn get_book_range_from_distance(
         &self,
         start_inclusive: u64,
-        length: u64,
+        length_exclusive: u64,
         always_return_one_book: bool,
         callback: Box<dyn FnOnce(Result<Vec<(BookInfo, u64)>, GetBookRangeError>) + Send>,
     ) -> JoinHandle<()> {
@@ -46,24 +46,11 @@ impl BookLibraryDatabase for VecBasedBookLibraryDatabase {
                     Ok(vec![(x.1.clone(), *x.0)])
                 })
         } else {
-            if start_inclusive == 0 {
-                let mut r: Vec<(BookInfo, u64)> = self
-                    .books_by_start_distance
-                    .range(0..=length)
-                    .map(|x| (x.1.clone(), *x.0))
-                    .collect();
-                r.pop();
-                Ok(r)
-            } else {
-                let mut r: Vec<(BookInfo, u64)> = self
-                    .books_by_start_distance
-                    .range((start_inclusive - 1)..=(start_inclusive + length))
-                    .skip(1)
-                    .map(|x| (x.1.clone(), *x.0))
-                    .collect();
-                r.pop();
-                Ok(r)
-            }
+            Ok(self
+                .books_by_start_distance
+                .range(start_inclusive..(start_inclusive + length_exclusive))
+                .map(|x| (x.1.clone(), *x.0))
+                .collect())
         };
 
         thread::spawn(move || callback(result))

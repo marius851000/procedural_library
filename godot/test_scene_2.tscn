@@ -22,8 +22,14 @@ fov = 94.1766
 script = ExtResource("2_vo6td")
 
 [node name="BookLine" parent="." instance=ExtResource("3_0rrtm")]
-length = 1000
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0350165, 0, 0)
+length = 100
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.65594, -0.754813, 0, 0.754813, 0.65594, 0.50208, -0.102229, 0)
 mesh = SubResource("PlaneMesh_6ewau")
+
+[node name="BookLine2" parent="." instance=ExtResource("3_0rrtm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14205, 0, 0)
+start_position = 100
+length = 100

@@ -22,17 +22,18 @@ pub trait BookLibraryDatabase {
      * Note: callback will always be run in a separate thread
      * Distance is in centimeter
      *
-     * Book occupy a range as in book_distance=..=(next_book_distance - 1)
-     * The first book taken is the one that occupy the start range
-     * The last book is the one that occupy the book before the last range. (so a range from 10 with a length of 50 will have books that occupy a total of less than or equal to 50 millimeter, or a single book if the book is more than 50 mm wide.)
-     * if always_return_one_book is true, it instead return only the first book, ignoring the distance
-     * always_return_one_book is false, return no book when last book if before the first book
+     * Book occupy a range as in book_distance=..next_book_distance
+     * if get_book_at_start is true, it return the single book that is at start_inclusive (not making use of length)
+     * 
+     * if get_book_at_start is false, then it return a list of book from:
+     * first book: the next beggining of a book (so if it is on a book range but not the start position, it get the next book)
+     * end book: the last book that occupy the range at start_inclusive + length_exclusive (if it is the beggining of a new book, it doesn’t take it)
      */
     fn get_book_range_from_distance(
         &self,
         start_inclusive: u64,
-        length: u64,
-        always_return_one_book: bool,
+        length_exclusive: u64,
+        get_book_at_start: bool,
         callback: Box<dyn FnOnce(Result<Vec<(BookInfo, u64)>, GetBookRangeError>) + Send>,
     ) -> JoinHandle<()>;
 }

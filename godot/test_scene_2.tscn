@@ -30,6 +30,6 @@ transform = Transform3D(1, 0, 0, 0, 0.65594, -0.754813, 0, 0.754813, 0.65594, 0.
 mesh = SubResource("PlaneMesh_6ewau")
 
 [node name="BookLine2" parent="." instance=ExtResource("3_0rrtm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.157366, 0, 0)
+transform = Transform3D(0.00272275, 0.999996, 0, -0.999996, 0.00272275, 0, 0, 0, 1, 0.157366, 0.145877, 0)
 book_start_distance_mm = 100
 book_length_mm = 100

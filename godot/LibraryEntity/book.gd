@@ -7,10 +7,6 @@ var book_info: GodotBookInfo
 func _init() -> void:
 	self.use_lod = false;
 	self.auto_allocate_if_needed = false
-	
-func _ready() -> void:
-	if Engine.is_editor_hint():
-		self._load_static()
 
 func load_book_if_needed():
 	if book_info == null:
@@ -42,7 +38,3 @@ func does_contain_book_by_default(searched_book_distance: int) -> bool:
 		return false
 	else:
 		return book_info.get_distance() <= searched_book_distance and book_info.get_distance() + book_info.get_width() > searched_book_distance
-			
-
-func _process(delta: float) -> void:
-	pass # Do not call the LibraryLOD LOD-related code

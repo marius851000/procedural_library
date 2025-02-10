@@ -41,4 +41,4 @@ root = NodePath("..")
 position_book_to_find = 4000
 
 [node name="TestLibraryPlacerPlacer" parent="." instance=ExtResource("4_0hi1x")]
-concentric_circle_count = 20
+concentric_circle_count = 10

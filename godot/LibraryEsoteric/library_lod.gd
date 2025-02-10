@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 class_name LibraryLOD
 
@@ -5,7 +6,9 @@ var parent_lod: LibraryLOD;
 # -1 is the default value, equivalent to null
 @export var book_start_distance_mm: int = -1;
 @export var book_length_mm: int = -1:
-	set = _set_book_length_mm
+	set(value):
+		book_length_mm = value
+		process_lod(Engine.is_editor_hint())
 
 func _set_book_length_mm(value: int):
 	book_length_mm = value
@@ -30,12 +33,9 @@ func _enter_tree() -> void:
 		else:
 			assert(book_length_mm != -1)
 			self.book_start_distance_mm = self.parent_lod.allocate_book_range(book_length_mm)
-	if !Engine.is_editor_hint():
-		process_lod()
+	process_lod(true)
 
 func find_and_register_with_parent():
-	if Engine.is_editor_hint() or is_root_node():
-		return
 	var considering_parent = self
 	while true:
 		considering_parent = considering_parent.get_parent()
@@ -44,18 +44,15 @@ func find_and_register_with_parent():
 		if is_instance_of(considering_parent, LibraryLOD):
 			break
 	
-	if !is_root_node():
-		assert(considering_parent != null, "No parent found found for a non-root LibraryLOD")
-	
-	self.parent_lod = considering_parent
-	self.parent_lod.register_child_lod(self)
+	if considering_parent == null:
+		$"/root/LibraryLodPoller".register_node(self)
+	else:
+		self.parent_lod = considering_parent
+		self.parent_lod.register_child_lod(self)
 
 func allocate_book_range(length: int) -> int:
 	assert(false, "allocate book range called on an invalid LibraryLOD")
 	return -1
-
-func is_root_node():
-	return false
 
 func register_child_lod(child_lod: LibraryLOD):
 	self.childs_lod.push_back(child_lod)
@@ -96,23 +93,25 @@ func load():
 	_load_static()
 	is_high_lod = true
 
-func process_lod():
-	if not Engine.is_editor_hint():
-		if use_lod:
-			var calculated_distance = $"/root/CameraManager".get_distance_to_nearest_camera(self);
-			if is_high_lod:
-				if calculated_distance > unload_distance:
-					unload()
-			else:
-				if calculated_distance < load_distance:
-					self.load()
+func process_lod(force: bool):
+	if !is_inside_tree():
+		return
+	if use_lod:
+		var calculated_distance: float = $"/root/CameraManager".get_distance_to_nearest_camera(self);
+		#print(self.to_string() + " .. " + str(calculated_distance))
+		if is_high_lod:
+			if calculated_distance > unload_distance or force:
+				unload()
 		else:
-			self.load()
+			if calculated_distance < load_distance or force:
+				self.load()
+	else:
+		self.load()
 
 # Will call this function 10 time per second (by default).
 # marker_number will loop from 0 to 0xFFFF at each call.
 func process_lod_maybe(marker_number: int):
-	process_lod()
+	process_lod(false)
 	if is_high_lod:
 		for child in childs_lod:
 			child.process_lod_maybe(marker_number)

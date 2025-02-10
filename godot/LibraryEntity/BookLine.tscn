@@ -11,5 +11,5 @@ unload_distance = 5.0
 load_distance = 4.0
 
 [node name="PreviewMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0011, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, -0.00055, 0.1, -0.075)
+transform = Transform3D(-0.0011, 0, 0, 0, 1, -1.50996e-07, 0, 1.50996e-07, 1, -0.00055, 0.1, -0.075)
 mesh = SubResource("BoxMesh_vb7g7")

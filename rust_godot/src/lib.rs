@@ -13,6 +13,8 @@ struct ProceduralLibraryExtension;
 #[gdextension]
 unsafe impl ExtensionLibrary for ProceduralLibraryExtension {}
 
+//TODO: convert to a ressource
+
 #[derive(GodotClass)]
 #[class(no_init)]
 struct GodotBookInfo {

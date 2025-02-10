@@ -6,6 +6,7 @@
 
 [node name="SimpleTestShelf" type="Node3D"]
 script = ExtResource("1_bwwsx")
+book_length_mm = 2500
 unload_distance = 12.0
 load_distance = 10.0
 
@@ -13,7 +14,7 @@ load_distance = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01203, 0.062489, 0)
 
 [node name="BookLine" parent="." instance=ExtResource("2_3uyyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.111849, -0.039673)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.11115, -0.039673)
 book_length_mm = 1000
 auto_allocate_if_needed = false
 
@@ -23,12 +24,12 @@ book_length_mm = 200
 auto_allocate_if_needed = false
 
 [node name="BookLine3" parent="." instance=ExtResource("2_3uyyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.801224, -0.113221)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.793486, -0.113221)
 scale_for_spacing = 2.0
 book_length_mm = 500
 auto_allocate_if_needed = false
 
 [node name="BookLine4" parent="." instance=ExtResource("2_3uyyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.132044, 1.18336, -0.0957764)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.132044, 1.17828, -0.0957764)
 book_length_mm = 800
 auto_allocate_if_needed = false

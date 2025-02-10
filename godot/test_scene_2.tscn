@@ -23,7 +23,6 @@ script = ExtResource("2_vo6td")
 
 [node name="BookLine" parent="." instance=ExtResource("3_0rrtm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0350165, 0, 0)
-book_start_distance_mm = 0
 book_length_mm = 100
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

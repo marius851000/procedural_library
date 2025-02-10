@@ -24,7 +24,7 @@ var childs_lod: Array[LibraryLOD] = [];
 
 func _enter_tree() -> void:
 	find_and_register_with_parent()
-	if self.book_start_distance_mm == -1 and auto_allocate_if_needed:
+	if self.book_start_distance_mm == -1 and auto_allocate_if_needed and !Engine.is_editor_hint():
 		if self.parent_lod == null:
 			self.book_start_distance_mm = 0
 		else:

@@ -14,20 +14,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01203, 0.062489, 0)
 
 [node name="BookLine" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.111849, -0.039673)
-book_start_distance_mm = 0
 book_length_mm = 1000
 
 [node name="BookLine2" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.101969, 0.45214, -0.079346)
-book_start_distance_mm = 0
 book_length_mm = 200
 
 [node name="BookLine3" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.801224, -0.113221)
-book_start_distance_mm = 0
+scale_for_spacing = 2.0
 book_length_mm = 500
 
 [node name="BookLine4" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.132044, 1.18336, -0.0957764)
-book_start_distance_mm = 0
 book_length_mm = 800

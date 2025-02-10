@@ -18,7 +18,6 @@ impl VecBasedBookLibraryDatabase {
             let book_width = book.width;
             books_by_start_distance.insert(current_distance, book);
             current_distance += book_width as u64;
-            current_distance += 10; // some separation
         }
         Self {
             books_by_start_distance,

@@ -31,7 +31,7 @@ impl AnnaBloomsburyMetadata {
                 
                 Ok(BookInfo {
                     title: parsed.metadata.title,
-                    width: ChaCha20Rng::seed_from_u64(book_id).random_range(10..=100),
+                    width: ChaCha20Rng::seed_from_u64(book_id).random_range(5..=25),
                 })
             })?,
         })

@@ -8,7 +8,7 @@ pub fn main() {
     let file = File::open("/home/marius/procedural_library/test.jsonl.seekable").unwrap();
     let anna_metadata = AnnaBloomsburyMetadata::new(file).unwrap();
 
-    println!("book_count: {}", anna_metadata.get_book_count());
+    println!("book length: {}", anna_metadata.get_library_length());
 
     let callback = |r: Result<Vec<(BookInfo, u64)>, GetBookRangeError>| {
         let r = r.unwrap();

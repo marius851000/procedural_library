@@ -6,8 +6,8 @@ use crate::BookInfo;
 
 #[derive(Error, Debug)]
 pub enum GetBookRangeError {
-    #[error("No book registered")]
-    NoBookRegistered,
+    #[error("Out of range")]
+    OutOfRange,
 }
 
 #[derive(Error, Debug)]
@@ -16,7 +16,10 @@ pub enum GetBookIdFromDistanceError {}
 pub trait GetBookRangeCallback: FnOnce(Result<Vec<BookInfo>, GetBookRangeError>) {}
 
 pub trait BookLibraryDatabase {
-    fn get_book_count(&self) -> u64;
+    /**
+     * Return the first distance where no book is allocated to.
+     */
+    fn get_library_length(&self) -> u64;
 
     /**
      * Note: callback will always be run in a separate thread

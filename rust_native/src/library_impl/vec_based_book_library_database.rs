@@ -26,8 +26,12 @@ impl VecBasedBookLibraryDatabase {
 }
 
 impl BookLibraryDatabase for VecBasedBookLibraryDatabase {
-    fn get_book_count(&self) -> u64 {
-        self.books_by_start_distance.len() as u64
+    fn get_library_length(&self) -> u64 {
+        if let Some((last_key, last_value)) = self.books_by_start_distance.last_key_value() {
+            *last_key + (last_value.width as u64)
+        } else {
+            0
+        }
     }
 
     fn get_book_range_from_distance(
@@ -38,12 +42,16 @@ impl BookLibraryDatabase for VecBasedBookLibraryDatabase {
         callback: Box<dyn FnOnce(Result<Vec<(BookInfo, u64)>, GetBookRangeError>) + Send>,
     ) -> JoinHandle<()> {
         let result = if always_return_one_book {
-            self.books_by_start_distance
-                .range(..=start_inclusive)
-                .last()
-                .map_or(Err(GetBookRangeError::NoBookRegistered), |x| {
-                    Ok(vec![(x.1.clone(), *x.0)])
-                })
+            if start_inclusive >= self.get_library_length() {
+                Err(GetBookRangeError::OutOfRange)
+            } else {
+                self.books_by_start_distance
+                    .range(..=start_inclusive)
+                    .last()
+                    .map_or(Err(GetBookRangeError::OutOfRange), |x| {
+                        Ok(vec![(x.1.clone(), *x.0)])
+                    })
+            }
         } else {
             Ok(self
                 .books_by_start_distance

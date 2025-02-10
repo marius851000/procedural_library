@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1dfjwnw560t4"]
+
+[ext_resource type="Script" path="res://LibraryEntity/TestLibraryPlacer/test_library_placer.gd" id="1_fe27h"]
+
+[node name="TestLibraryPlacer" type="Node3D"]
+script = ExtResource("1_fe27h")

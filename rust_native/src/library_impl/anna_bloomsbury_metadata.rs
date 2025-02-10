@@ -39,8 +39,8 @@ impl AnnaBloomsburyMetadata {
 }
 
 impl BookLibraryDatabase for AnnaBloomsburyMetadata {
-    fn get_book_count(&self) -> u64 {
-        self.anna_metadata.get_book_count()
+    fn get_library_length(&self) -> u64 {
+        self.anna_metadata.get_library_length()
     }
 
     fn get_book_range_from_distance(

@@ -6,8 +6,8 @@
 
 [node name="SimpleTestShelf" type="Node3D"]
 script = ExtResource("1_bwwsx")
-unload_distance = 10.0
-load_distance = 8.0
+unload_distance = 12.0
+load_distance = 10.0
 
 [node name="ShelfModel" parent="." instance=ExtResource("3_iisfd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01203, 0.062489, 0)

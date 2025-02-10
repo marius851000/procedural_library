@@ -30,12 +30,11 @@ func _enter_tree() -> void:
 		else:
 			assert(book_length_mm != -1)
 			self.book_start_distance_mm = self.parent_lod.allocate_book_range(book_length_mm)
-
-func _ready():
-	process_lod()
+	if !Engine.is_editor_hint():
+		process_lod()
 
 func find_and_register_with_parent():
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or is_root_node():
 		return
 	var considering_parent = self
 	while true:
@@ -45,9 +44,8 @@ func find_and_register_with_parent():
 		if is_instance_of(considering_parent, LibraryLOD):
 			break
 	
-	if considering_parent == null:
-		self.when_no_parent_is_found()
-		return
+	if !is_root_node():
+		assert(considering_parent != null, "No parent found found for a non-root LibraryLOD")
 	
 	self.parent_lod = considering_parent
 	self.parent_lod.register_child_lod(self)
@@ -56,8 +54,8 @@ func allocate_book_range(length: int) -> int:
 	assert(false, "allocate book range called on an invalid LibraryLOD")
 	return -1
 
-func when_no_parent_is_found():
-	assert(false, 'no LibraryLOD parent found')
+func is_root_node():
+	return false
 
 func register_child_lod(child_lod: LibraryLOD):
 	self.childs_lod.push_back(child_lod)

@@ -63,8 +63,8 @@ impl INode for GodotProceduralLibraryData {
 #[godot_api]
 impl GodotProceduralLibraryData {
     #[func]
-    pub fn get_book_count(&self) -> u64 {
-        self.library.get_book_count()
+    pub fn get_library_length(&self) -> u64 {
+        self.library.get_library_length()
     }
 
     #[func]

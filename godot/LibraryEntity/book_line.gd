@@ -13,8 +13,6 @@ func _set_book_length_mm(value: int):
 		reload_preview()
 
 func _ready() -> void:
-	if not Engine.is_editor_hint():
-		super._ready();
 	reload_preview()
 
 func _load_static():

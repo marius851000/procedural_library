@@ -11,8 +11,6 @@ func _init() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		self._load_static()
-	else:
-		super._ready()
 
 func load_book_if_needed():
 	if book_info == null:

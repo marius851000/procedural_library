@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://LibraryEsoteric/library_lod_root.gd" id="1_r0bas"]
 [ext_resource type="Script" path="res://LibraryEsoteric/user_camera.gd" id="2_635lp"]
-[ext_resource type="PackedScene" uid="uid://dlcwbu08hplnf" path="res://LibraryEntity/Shelf/SimpleTestShelf/SimpleTestShelf.tscn" id="3_0nqx2"]
+[ext_resource type="PackedScene" uid="uid://bvpx5aekdydem" path="res://LibraryEntity/TestLibraryPlacer/test_library_placer_placer.tscn" id="4_0hi1x"]
 [ext_resource type="Script" path="res://LibraryEsoteric/book_locator.gd" id="4_a4sjv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gi78"]
@@ -10,7 +10,7 @@ albedo_color = Color(0.331127, 0.563196, 0.44672, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_nckvv"]
 material = SubResource("StandardMaterial3D_2gi78")
-size = Vector2(10, 10)
+size = Vector2(100, 100)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o6p1r"]
 size = Vector2(5, 5)
@@ -19,36 +19,15 @@ size = Vector2(5, 5)
 script = ExtResource("1_r0bas")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.620258, 0, -0.784398, 0, 1, 0, 0.784398, 0, 0.620258, -0.291963, 1, 3.04583)
+transform = Transform3D(0.620258, 0, -0.784398, 0, 1, 0, 0.784398, 0, 0.620258, -0.291963, 3.49635, -2.49838)
 script = ExtResource("2_635lp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.949118, -0.0584432, -0.30945, 0.31492, 0.176138, 0.932631, -2.71342e-09, -0.982629, 0.185581, 0, 2.12129, 1.57095)
+transform = Transform3D(0.949118, -0.0584431, -0.30945, 0.31492, 0.176138, 0.932631, -2.71342e-09, -0.982629, 0.185581, 0, 3.97447, 1.57095)
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("QuadMesh_nckvv")
-
-[node name="SimpleTestShelf" parent="." instance=ExtResource("3_0nqx2")]
-
-[node name="SimpleTestShelf2" parent="." instance=ExtResource("3_0nqx2")]
-transform = Transform3D(0.877523, 0, -0.479534, 0, 1, 0, 0.479534, 0, 0.877523, 1.5088, 0, 0.0505528)
-
-[node name="SimpleTestShelf3" parent="." instance=ExtResource("3_0nqx2")]
-transform = Transform3D(0.394134, 0, -0.919053, 0, 1, 0, 0.919053, 0, 0.394134, 2.76409, 0, 0.828918)
-
-[node name="SimpleTestShelf4" parent="." instance=ExtResource("3_0nqx2")]
-transform = Transform3D(-0.0181854, 0, -0.999835, 0, 1, 0, 0.999835, 0, -0.0181854, 3.24696, 0, 2.26732)
-
-[node name="Ground2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0578934, -0.0355099, -0.997691, -0.00205709, -0.999369, 0.0354503, -0.998321, 5.06439e-09, -0.0579299, 4.55896, 0, 0)
-mesh = SubResource("QuadMesh_nckvv")
-skeleton = NodePath("../Ground")
-
-[node name="Ground3" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0300463, 0.995006, -0.0951852, -0.997883, -0.0353549, -0.0545843, -0.057677, 0.0933437, 0.993962, 0.457966, -0.00937819, -1.98363)
-mesh = SubResource("QuadMesh_nckvv")
-skeleton = NodePath("../Ground2")
 
 [node name="Locator" type="Sprite3D" parent="." node_paths=PackedStringArray("root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58832, 0.196795, 0)
@@ -60,3 +39,6 @@ texture = SubResource("PlaceholderTexture2D_o6p1r")
 script = ExtResource("4_a4sjv")
 root = NodePath("..")
 position_book_to_find = 4000
+
+[node name="TestLibraryPlacerPlacer" parent="." instance=ExtResource("4_0hi1x")]
+concentric_circle_count = 20

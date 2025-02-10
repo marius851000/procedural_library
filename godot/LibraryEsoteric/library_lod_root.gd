@@ -6,8 +6,8 @@ func _init():
 	self.use_lod = false
 	self.remove_child_on_low = false
 
-func when_no_parent_is_found(): # expected
-	pass
+func is_root_node() -> bool:
+	return true
 
 func allocate_book_range(length: int) -> int:
 	var to_return = next_allocation_start

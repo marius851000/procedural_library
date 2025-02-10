@@ -18,7 +18,7 @@ var use_lod = true;
 # if false, will put registered child at low lod and disable LOD update for them. It won’t deregister them.
 var remove_child_on_low = true;
 var is_high_lod = false;
-var auto_allocate_if_needed = true;
+@export var auto_allocate_if_needed = true;
 
 var childs_lod: Array[LibraryLOD] = [];
 

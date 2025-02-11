@@ -18,7 +18,7 @@ func _registered_node_removed(node: LibraryLOD):
 			break
 
 
-func _process(dt: float):
+func _process(_dt: float):
 	#TODO: actually call that 10 time per second (approx) with increasing number
 	for child in registered_node:
 		child.process_lod_maybe(0)

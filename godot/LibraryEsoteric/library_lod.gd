@@ -5,13 +5,13 @@ class_name LibraryLOD
 var parent_lod: LibraryLOD:
 	set(value):
 		if parent_lod != null:
-			parent_lod.tree_exiting.disconnect(_parent_lod_exiting)
+			if parent_lod.tree_exiting.is_connected(_parent_lod_exiting):
+				parent_lod.tree_exiting.disconnect(_parent_lod_exiting)
 		if value != null:
-			value.tree_exiting.connect(_parent_lod_exiting)
+			value.tree_exiting.connect(_parent_lod_exiting, Object.CONNECT_ONE_SHOT)
 		parent_lod = value
 
 func _parent_lod_exiting():
-	self.parent_lod.tree_exiting.disconnect(_parent_lod_exiting)
 	self.parent_lod = null
 		
 # -1 is the default value, equivalent to null
@@ -78,13 +78,19 @@ func find_and_register_with_parent():
 		self.parent_lod = considering_parent
 		self.parent_lod.register_child_lod(self)
 
-func allocate_book_range(length: int) -> int:
+func allocate_book_range(_length: int) -> int:
 	assert(false, "allocate book range called on an invalid LibraryLOD")
 	return -1
 
 func register_child_lod(child_lod: LibraryLOD):
+	child_lod.tree_exiting.connect(_on_child_lod_exiting.bind(child_lod), Object.CONNECT_ONE_SHOT)
 	self.childs_lod.push_back(child_lod)
 	child_lod.set("parent_lod", self)
+
+func _on_child_lod_exiting(child_node: LibraryLOD):
+	for i in range(self.childs_lod.size()):
+		if self.childs_lod[i] == child_node:
+			self.childs_lod.remove_at(i)
 
 func does_contain_book_by_default(book_start_position: int) -> bool:
 	return book_start_distance_mm <= book_start_position and book_start_distance_mm + book_length_mm > book_start_position

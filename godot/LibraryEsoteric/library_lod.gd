@@ -27,11 +27,12 @@ func _set_book_length_mm(value: int):
 @export var unload_distance: float = 2.0;
 @export var load_distance: float = 1.0;
 #TODO: can’t I make them overrideable constant? It should optimise better.
+# Will not reduce the level of detail of this element if false. It will stay at high whatever happen, and _unload_static will never be called
 var use_lod = true;
 # if true, will free the registered child LOD
 # if false, will put registered child at low lod and disable LOD update for them. It won’t deregister them.
 var remove_child_on_low = true;
-var is_high_lod = false;
+var lod_level: int = -1; # 0 is high, 1 is low, -1 is when unload
 @export var auto_allocate_if_needed = true;
 
 var childs_lod: Array[LibraryLOD] = [];
@@ -106,7 +107,7 @@ func _unload_static():
 	pass
 
 func unload():
-	if not is_high_lod or not use_lod:
+	if lod_level == 1 or not use_lod:
 		return
 	_unload_static()
 	for child in childs_lod:
@@ -117,36 +118,45 @@ func unload():
 				child.unload()
 	if remove_child_on_low:
 		childs_lod.clear()
-	is_high_lod = false
+	lod_level = 1
 
 func _load_static():
 	pass
 
 func load():
-	if is_high_lod:
+	if lod_level == 0:
 		return
 	_load_static()
-	is_high_lod = true
+	lod_level = 0
 
 func process_lod(force: bool):
 	if !is_inside_tree():
 		return
+	if lod_level == -1:
+		force = true
 	if use_lod:
 		var calculated_distance: float = $"/root/CameraManager".get_distance_to_nearest_camera(self);
 		#print(self.to_string() + " .. " + str(calculated_distance))
-		if is_high_lod:
-			if calculated_distance > unload_distance or force:
+		if force:
+			if calculated_distance > unload_distance:
 				unload()
-		else:
-			if calculated_distance < load_distance or force:
+			else:
 				self.load()
+		else:
+			if lod_level == 0:
+				if calculated_distance > unload_distance:
+					unload()
+			else:
+				if calculated_distance < load_distance:
+					self.load()
 	else:
 		self.load()
+		
 
 # Will call this function 10 time per second (by default).
 # marker_number will loop from 0 to 0xFFFF at each call.
 func process_lod_maybe(marker_number: int):
 	process_lod(false)
-	if is_high_lod:
+	if lod_level == 0:
 		for child in childs_lod:
 			child.process_lod_maybe(marker_number)

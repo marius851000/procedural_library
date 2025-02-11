@@ -1,5 +1,6 @@
 *.jsonl.seekable
 *.jsonl.seekable.zst
+pg_catalog.csv
 rust_native/target/
 rust_godot/target/
 *.blend1

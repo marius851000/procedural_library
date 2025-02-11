@@ -2,7 +2,18 @@
 extends Node3D
 class_name LibraryLOD
 
-var parent_lod: LibraryLOD;
+var parent_lod: LibraryLOD:
+	set(value):
+		if parent_lod != null:
+			parent_lod.tree_exiting.disconnect(_parent_lod_exiting)
+		if value != null:
+			value.tree_exiting.connect(_parent_lod_exiting)
+		parent_lod = value
+
+func _parent_lod_exiting():
+	self.parent_lod.tree_exiting.disconnect(_parent_lod_exiting)
+	self.parent_lod = null
+		
 # -1 is the default value, equivalent to null
 @export var book_start_distance_mm: int = -1;
 @export var book_length_mm: int = -1:

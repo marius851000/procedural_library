@@ -91,6 +91,7 @@ func _on_child_lod_exiting(child_node: LibraryLOD):
 	for i in range(self.childs_lod.size()):
 		if self.childs_lod[i] == child_node:
 			self.childs_lod.remove_at(i)
+			break
 
 func does_contain_book_by_default(book_start_position: int) -> bool:
 	return book_start_distance_mm <= book_start_position and book_start_distance_mm + book_length_mm > book_start_position

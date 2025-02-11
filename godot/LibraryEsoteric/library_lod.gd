@@ -33,7 +33,24 @@ func _enter_tree() -> void:
 		else:
 			assert(book_length_mm != -1)
 			self.book_start_distance_mm = self.parent_lod.allocate_book_range(book_length_mm)
+	
+	if parent_lod != null:
+		# given this node is also included in the parent’s child, account for that
+		var parent_sum_of_child_distance_without_this: int = parent_lod.sum_of_child_distance() - self.book_length_mm
+		var parent_remaining_space: int = parent_lod.book_length_mm - parent_sum_of_child_distance_without_this
+		if parent_remaining_space < self.book_length_mm:
+			if parent_remaining_space < 0:
+				self.book_length_mm = 0
+			else:
+				self.book_length_mm = parent_remaining_space
+			
 	process_lod(true)
+
+func sum_of_child_distance() -> int:
+	var sum: int = 0
+	for child in childs_lod:
+		sum += child.book_length_mm
+	return sum
 
 func find_and_register_with_parent():
 	var considering_parent = self

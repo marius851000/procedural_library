@@ -3,7 +3,7 @@ extends LibraryLOD
 
 func _init():
 	remove_child_on_low = false
-	book_length_mm = 800 + 500 + 200 + 1000
+	book_length_mm = 1000 + 700 + 300 + 800
 
 func _load_static():
 	if !Engine.is_editor_hint():

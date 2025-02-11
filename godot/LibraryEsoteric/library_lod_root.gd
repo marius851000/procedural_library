@@ -7,6 +7,11 @@ func _init():
 	self.use_lod = false
 	self.remove_child_on_low = false
 
+func _enter_tree() -> void:
+	if !Engine.is_editor_hint():
+		self.book_length_mm = $"/root/GlobalLibrary".get_library_length()
+	super._enter_tree()
+
 func allocate_book_range(length: int) -> int:
 	if Engine.is_editor_hint():
 		return 0

@@ -20,13 +20,13 @@ auto_allocate_if_needed = false
 
 [node name="BookLine2" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.101969, 0.45214, -0.079346)
-book_length_mm = 200
+book_length_mm = 700
 auto_allocate_if_needed = false
 
 [node name="BookLine3" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.793486, -0.113221)
 scale_for_spacing = 2.0
-book_length_mm = 500
+book_length_mm = 300
 auto_allocate_if_needed = false
 
 [node name="BookLine4" parent="." instance=ExtResource("2_3uyyi")]

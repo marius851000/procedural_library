@@ -27,7 +27,7 @@ pub trait BookLibraryDatabase {
      *
      * Book occupy a range as in book_distance=..next_book_distance
      * if get_book_at_start is true, it return the single book that is at start_inclusive (not making use of length)
-     * 
+     *
      * if get_book_at_start is false, then it return a list of book from:
      * first book: the next beggining of a book (so if it is on a book range but not the start position, it get the next book)
      * end book: the last book that occupy the range at start_inclusive + length_exclusive (if it is the beggining of a new book, it doesn’t take it)

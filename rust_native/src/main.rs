@@ -1,14 +1,16 @@
 use std::fs::File;
 
-use procedural_library_rust_native::{
-    library_impl::AnnaBloomsburyMetadata, BookInfo, BookLibraryDatabase, GetBookRangeError,
-};
+use procedural_library_rust_native::{BookInfo, BookLibraryDatabase, GetBookRangeError};
 
 pub fn main() {
-    let file = File::open("/home/marius/procedural_library/test.jsonl.seekable").unwrap();
-    let anna_metadata = AnnaBloomsburyMetadata::new(file).unwrap();
+    /*let file = File::open("/home/marius/procedural_library/test.jsonl.seekable").unwrap();
+    let metadata = procedural_library_rust_native::library_impl::AnnaBloomsburyMetadata::new(file).unwrap();*/
+    let mut file = File::open("/home/marius/procedural_library/pg_catalog.csv").unwrap();
+    let metadata =
+        procedural_library_rust_native::library_impl::ProjectGutenbergCsvCatalog::new(&mut file)
+            .unwrap();
 
-    println!("book length: {}", anna_metadata.get_library_length());
+    println!("book length: {}", metadata.get_library_length());
 
     let callback = |r: Result<Vec<(BookInfo, u64)>, GetBookRangeError>| {
         let r = r.unwrap();
@@ -16,13 +18,8 @@ pub fn main() {
         println!("{:?}", r);
     };
 
-    anna_metadata
+    metadata
         .get_book_range_from_distance(0, 1000, false, Box::new(callback))
-        .join()
-        .unwrap();
-
-    anna_metadata
-        .get_book_range_from_distance(1, 100, false, Box::new(callback))
         .join()
         .unwrap();
 }

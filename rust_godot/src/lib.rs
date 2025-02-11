@@ -4,9 +4,7 @@ use std::{
 };
 
 use godot::prelude::*;
-use procedural_library_rust_native::{
-    library_impl::AnnaBloomsburyMetadata, BookInfo, BookLibraryDatabase, GetBookRangeError,
-};
+use procedural_library_rust_native::{BookInfo, BookLibraryDatabase, GetBookRangeError};
 
 struct ProceduralLibraryExtension;
 
@@ -53,11 +51,17 @@ struct GodotProceduralLibraryData {
 #[godot_api]
 impl INode for GodotProceduralLibraryData {
     fn init(_base: Base<Node>) -> Self {
-        let file = File::open("/home/marius/procedural_library/test.jsonl.seekable").unwrap();
-        let anna_metadata = AnnaBloomsburyMetadata::new(file).unwrap();
+        /*let file = File::open("/home/marius/procedural_library/test.jsonl.seekable").unwrap();
+        let metadata = procedural_library_rust_native::library_impl::AnnaBloomsburyMetadata::new(file).unwrap();*/
+        let mut file = File::open("/home/marius/procedural_library/pg_catalog.csv").unwrap();
+        let metadata =
+            procedural_library_rust_native::library_impl::ProjectGutenbergCsvCatalog::new(
+                &mut file,
+            )
+            .unwrap();
 
         Self {
-            library: Box::new(anna_metadata),
+            library: Box::new(metadata),
         }
     }
 }

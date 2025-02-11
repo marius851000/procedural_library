@@ -32,7 +32,8 @@ impl AnnaMetadata {
         for (book_id, line) in BufReader::new(&mut reader).lines().enumerate() {
             let line = line?;
 
-            let parsed = parser(&line, book_id as u64).map_err(LoadAnnaMetadataError::BookInfoParseError)?;
+            let parsed =
+                parser(&line, book_id as u64).map_err(LoadAnnaMetadataError::BookInfoParseError)?;
 
             books.push(parsed);
         }

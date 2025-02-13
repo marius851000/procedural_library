@@ -106,16 +106,19 @@ func get_book_position(book_start_position: int) -> Vector3:
 func _unload_static():
 	pass
 
-func unload():
-	if lod_level == 1 or not use_lod:
-		return
+func unload(force: bool):
+	if (lod_level == 1 or not use_lod):
+		if force:
+			self.load(false)
+		else:
+			return
 	_unload_static()
 	for child in childs_lod:
 		if is_instance_valid(child):
 			if remove_child_on_low:
 				child.queue_free()
 			else:
-				child.unload()
+				child.unload(false)
 	if remove_child_on_low:
 		childs_lod.clear()
 	lod_level = 1
@@ -123,9 +126,12 @@ func unload():
 func _load_static():
 	pass
 
-func load():
+func load(force: bool):
 	if lod_level == 0:
-		return
+		if force:
+			self.unload(false)
+		else:
+			return
 	_load_static()
 	lod_level = 0
 
@@ -139,18 +145,18 @@ func process_lod(force: bool):
 		#print(self.to_string() + " .. " + str(calculated_distance))
 		if force:
 			if calculated_distance > unload_distance:
-				unload()
+				unload(force)
 			else:
-				self.load()
+				self.load(force)
 		else:
 			if lod_level == 0:
 				if calculated_distance > unload_distance:
-					unload()
+					unload(force)
 			else:
 				if calculated_distance < load_distance:
-					self.load()
+					self.load(force)
 	else:
-		self.load()
+		self.load(force)
 		
 
 # Will call this function 10 time per second (by default).

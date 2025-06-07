@@ -1,15 +1,15 @@
 [gd_scene load_steps=8 format=3 uid="uid://cvs1ljooa4d2a"]
 
-[ext_resource type="Script" path="res://LibraryEsoteric/library_lod_root.gd" id="1_r0bas"]
-[ext_resource type="Script" path="res://LibraryEsoteric/user_camera.gd" id="2_635lp"]
+[ext_resource type="Script" uid="uid://i81tog21qdrj" path="res://LibraryEsoteric/library_lod_root.gd" id="1_r0bas"]
+[ext_resource type="Script" uid="uid://lo05eojf5mhx" path="res://LibraryEsoteric/user_camera.gd" id="2_635lp"]
 [ext_resource type="PackedScene" uid="uid://bvpx5aekdydem" path="res://LibraryEntity/TestLibraryPlacer/test_library_placer_placer.tscn" id="4_0hi1x"]
-[ext_resource type="Script" path="res://LibraryEsoteric/book_locator.gd" id="4_a4sjv"]
+[ext_resource type="Script" uid="uid://blc3rbq6ptcmm" path="res://LibraryEsoteric/book_locator.gd" id="4_a4sjv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gi78"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3lo1i"]
 albedo_color = Color(0.331127, 0.563196, 0.44672, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_nckvv"]
-material = SubResource("StandardMaterial3D_2gi78")
+material = SubResource("StandardMaterial3D_3lo1i")
 size = Vector2(100, 100)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o6p1r"]
@@ -17,7 +17,6 @@ size = Vector2(5, 5)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_r0bas")
-book_length_mm = 1000000
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.620258, 0, -0.784398, 0, 1, 0, 0.784398, 0, 0.620258, -0.291963, 36.2435, -2.49838)

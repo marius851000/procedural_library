@@ -16,13 +16,16 @@ func _parent_lod_exiting():
 		
 # -1 is the default value, equivalent to null
 @export var book_start_distance_mm: int = -1;
-@export var book_length_mm: int = -1:
-	set(value):
-		book_length_mm = value
-		process_lod(Engine.is_editor_hint())
 
-func _set_book_length_mm(value: int):
-	book_length_mm = value
+# The maximum book length this element and their childs are allowed to have.
+# May be lower than the max supported length, returned by get_max_supported_length.
+# May also be 0
+# -1 will set it to the max supported length, unless it would go over the parent’s book_max_length_mm (when entering tree)
+@export var book_max_length_mm: int = -1:
+	set(value):
+		book_max_length_mm = value
+		process_lod(Engine.is_editor_hint())
+var is_book_max_length_mm_final: bool = false
 
 @export var unload_distance: float = 2.0;
 @export var load_distance: float = 1.0;
@@ -39,30 +42,41 @@ var childs_lod: Array[LibraryLOD] = [];
 
 func _enter_tree() -> void:
 	find_and_register_with_parent()
-	if self.book_start_distance_mm == -1 and auto_allocate_if_needed and !Engine.is_editor_hint():
-		if self.parent_lod == null:
-			self.book_start_distance_mm = 0
-		else:
-			assert(book_length_mm != -1)
-			self.book_start_distance_mm = self.parent_lod.allocate_book_range(book_length_mm)
 	
-	if parent_lod != null:
-		# given this node is also included in the parent’s child, account for that
-		var parent_sum_of_child_distance_without_this: int = parent_lod.sum_of_child_distance() - self.book_length_mm
-		var parent_remaining_space: int = parent_lod.book_length_mm - parent_sum_of_child_distance_without_this
-		if parent_remaining_space < self.book_length_mm:
-			if parent_remaining_space < 0:
-				self.book_length_mm = 0
+	if !Engine.is_editor_hint():
+		assert(self.get_max_supported_length() > 0)
+		if self.book_max_length_mm < 0:
+			self.book_max_length_mm = self.get_max_supported_length()
+		
+		# limit book_max_length_mm to what the parent can handle
+		if parent_lod != null:
+			var parent_remaining_space: int = parent_lod.space_remaining_to_allocate()
+			assert(parent_remaining_space >= 0)
+			if self.book_max_length_mm > parent_remaining_space:
+				self.book_max_length_mm = parent_remaining_space
+		is_book_max_length_mm_final = true
+	
+		if self.book_start_distance_mm < 0 and auto_allocate_if_needed:
+			if self.parent_lod == null:
+				self.book_start_distance_mm = 0
 			else:
-				self.book_length_mm = parent_remaining_space
-			
+				self.book_start_distance_mm = self.parent_lod.allocate_book_range(book_max_length_mm)
+
 	process_lod(true)
 
-func sum_of_child_distance() -> int:
-	var sum: int = 0
+# The value returned should stay constant
+func get_max_supported_length() -> int:
+	return 0
+
+# max only be called during or after _on_enter_tree, only after this one book_max_length_mm has been set
+func space_remaining_to_allocate():
+	var space_remaining: int = self.book_max_length_mm
+	assert(space_remaining >= 0)
 	for child in childs_lod:
-		sum += child.book_length_mm
-	return sum
+		if child.is_book_max_length_mm_final:
+			space_remaining -= child.book_max_length_mm
+			assert(space_remaining >= 0)
+	return space_remaining
 
 func find_and_register_with_parent():
 	var considering_parent = self
@@ -95,7 +109,7 @@ func _on_child_lod_exiting(child_node: LibraryLOD):
 			break
 
 func does_contain_book_by_default(book_start_position: int) -> bool:
-	return book_start_distance_mm <= book_start_position and book_start_distance_mm + book_length_mm > book_start_position
+	return book_start_distance_mm <= book_start_position and book_start_distance_mm + book_max_length_mm > book_start_position
 
 func get_book_position(book_start_position: int) -> Vector3:
 	for child in childs_lod:

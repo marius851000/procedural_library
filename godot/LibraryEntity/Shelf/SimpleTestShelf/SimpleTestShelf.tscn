@@ -14,25 +14,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01203, 0.062489, 0)
 
 [node name="BookLine" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874262, 0.11115, -0.039673)
-extra_space_for_randomness_mm = 50.0
-book_max_length_mm = 950
-auto_allocate_if_needed = false
+extra_space_for_randomness_mm = 100.0
+book_size_supported = 900
 
 [node name="BookLine2" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0599914, 0.45214, -0.079346)
 extra_space_for_randomness_mm = 400.0
-book_max_length_mm = 600
-auto_allocate_if_needed = false
+book_size_supported = 600
 
 [node name="BookLine3" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117501, 0.793486, -0.113221)
 scale_for_spacing = 2.0
-extra_space_for_randomness_mm = 450.0
-book_max_length_mm = 300
-auto_allocate_if_needed = false
+extra_space_for_randomness_mm = 900.0
+book_size_supported = 100
 
 [node name="BookLine4" parent="." instance=ExtResource("2_3uyyi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0582084, 1.17828, -0.0957764)
 extra_space_for_randomness_mm = 250.0
-book_max_length_mm = 800
-auto_allocate_if_needed = false
+book_size_supported = 600

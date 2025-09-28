@@ -53,7 +53,7 @@ impl INode for GodotProceduralLibraryData {
     fn init(_base: Base<Node>) -> Self {
         /*let file = File::open("/home/marius/procedural_library/test.jsonl.seekable").unwrap();
         let metadata = procedural_library_rust_native::library_impl::AnnaBloomsburyMetadata::new(file).unwrap();*/
-        let mut file = File::open("/home/marius/procedural_library/pg_catalog.csv").unwrap();
+        let mut file = File::open("/home/marius/Sync/programming_project/procedural_library/pg_catalog.csv").unwrap();
         let metadata =
             procedural_library_rust_native::library_impl::ProjectGutenbergCsvCatalog::new(
                 &mut file,

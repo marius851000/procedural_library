@@ -13,19 +13,8 @@ var parent_lod: LibraryLOD:
 
 func _parent_lod_exiting():
 	self.parent_lod = null
-		
-# -1 is the default value, equivalent to null
-@export var book_start_distance_mm: int = -1;
 
-# The maximum book length this element and their childs are allowed to have.
-# May be lower than the max supported length, returned by get_max_supported_length.
-# May also be 0
-# -1 will set it to the max supported length, unless it would go over the parent’s book_max_length_mm (when entering tree)
-@export var book_max_length_mm: int = -1:
-	set(value):
-		book_max_length_mm = value
-		process_lod(Engine.is_editor_hint())
-var is_book_max_length_mm_final: bool = false
+var allocation: BookAllocator = null;
 
 @export var unload_distance: float = 2.0;
 @export var load_distance: float = 1.0;
@@ -42,41 +31,20 @@ var childs_lod: Array[LibraryLOD] = [];
 
 func _enter_tree() -> void:
 	find_and_register_with_parent()
-	
+
 	if !Engine.is_editor_hint():
 		assert(self.get_max_supported_length() > 0)
-		if self.book_max_length_mm < 0:
-			self.book_max_length_mm = self.get_max_supported_length()
-		
-		# limit book_max_length_mm to what the parent can handle
-		if parent_lod != null:
-			var parent_remaining_space: int = parent_lod.space_remaining_to_allocate()
-			assert(parent_remaining_space >= 0)
-			if self.book_max_length_mm > parent_remaining_space:
-				self.book_max_length_mm = parent_remaining_space
-		is_book_max_length_mm_final = true
-	
-		if self.book_start_distance_mm < 0 and auto_allocate_if_needed:
-			if self.parent_lod == null:
-				self.book_start_distance_mm = 0
-			else:
-				self.book_start_distance_mm = self.parent_lod.allocate_book_range(book_max_length_mm)
 
+		# limit book_max_length_mm to what the parent can handle
+		if parent_lod != null && parent_lod.allocation != null && self.allocation == null:
+			self.allocation = parent_lod.allocation.allocate(self.get_max_supported_length())
+		assert(self.allocation != null)
 	process_lod(true)
 
-# The value returned should stay constant
+# The value returned should stay constant during and after _enter_tree has been called
+# This represent the max lenght this element and their eventual children can hold.
 func get_max_supported_length() -> int:
 	return 0
-
-# max only be called during or after _on_enter_tree, only after this one book_max_length_mm has been set
-func space_remaining_to_allocate():
-	var space_remaining: int = self.book_max_length_mm
-	assert(space_remaining >= 0)
-	for child in childs_lod:
-		if child.is_book_max_length_mm_final:
-			space_remaining -= child.book_max_length_mm
-			assert(space_remaining >= 0)
-	return space_remaining
 
 func find_and_register_with_parent():
 	var considering_parent = self
@@ -86,16 +54,12 @@ func find_and_register_with_parent():
 			break
 		if is_instance_of(considering_parent, LibraryLOD):
 			break
-	
+
 	if considering_parent == null:
 		$"/root/LibraryLodPoller".register_node(self)
 	else:
 		self.parent_lod = considering_parent
 		self.parent_lod.register_child_lod(self)
-
-func allocate_book_range(_length: int) -> int:
-	assert(false, "allocate book range called on an invalid LibraryLOD")
-	return -1
 
 func register_child_lod(child_lod: LibraryLOD):
 	child_lod.tree_exiting.connect(_on_child_lod_exiting.bind(child_lod), Object.CONNECT_ONE_SHOT)
@@ -108,15 +72,18 @@ func _on_child_lod_exiting(child_node: LibraryLOD):
 			self.childs_lod.remove_at(i)
 			break
 
-func does_contain_book_by_default(book_start_position: int) -> bool:
-	return book_start_distance_mm <= book_start_position and book_start_distance_mm + book_max_length_mm > book_start_position
+func contain_book(book_start_position: int) -> bool:
+	if self.allocation == null:
+		return false
+	else:
+		return self.allocation.contain_book_by_default(book_start_position)
 
 func get_book_position(book_start_position: int) -> Vector3:
 	for child in childs_lod:
-		if child.does_contain_book_by_default(book_start_position):
+		if child.contain_book(book_start_position):
 			return child.get_book_position(book_start_position)
 	return self.global_position
-	
+
 func _unload_static():
 	pass
 
@@ -171,7 +138,7 @@ func process_lod(force: bool):
 					self.load(force)
 	else:
 		self.load(force)
-		
+
 
 # Will call this function 10 time per second (by default).
 # marker_number will loop from 0 to 0xFFFF at each call.

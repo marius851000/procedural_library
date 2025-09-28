@@ -30,14 +30,14 @@ func _load_static():
 	$SimpleBookMesh.set("scale", Vector3($SimpleBookMesh.scale.x, book_width * 0.001, $SimpleBookMesh.scale.z))
 	$SimpleBookMesh.set("position", Vector3($SimpleBookMesh.scale.x/2, $SimpleBookMesh.scale.y/2, -$SimpleBookMesh.scale.z/2))
 	
-	var font_height = book_width / 2
+	var font_height = book_width / 2.0
 	if font_height > 30:
 		font_height = 30
 	$"Label".pixel_size = (font_height * 0.001) / $"Label".font_size
 	$"Label".text = book_title
 	$"Label".position = Vector3($SimpleBookMesh.scale.x/2, $SimpleBookMesh.scale.y/2, 0.001)
 
-func does_contain_book_by_default(searched_book_distance: int) -> bool:
+func contain_book(searched_book_distance: int) -> bool:
 	if book_info == null:
 		return false
 	else:

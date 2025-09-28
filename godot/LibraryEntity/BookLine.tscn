@@ -1,13 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://cylfr87ssv03i"]
 
-[ext_resource type="Script" path="res://LibraryEntity/book_line.gd" id="1_cso4e"]
+[ext_resource type="Script" uid="uid://cawyeogdgw1nj" path="res://LibraryEntity/book_line.gd" id="1_cso4e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vb7g7"]
 size = Vector3(1, 0.2, 0.15)
 
 [node name="BookLine" type="Node3D"]
 script = ExtResource("1_cso4e")
-book_length_mm = 100
 unload_distance = 5.0
 load_distance = 4.0
 
